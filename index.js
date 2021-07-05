@@ -11,13 +11,13 @@ app.use(express.json());
 
 app.post("/", (req, res) => {
   try {
-    const { message, name, email } = req.body;
+    // const { message, name, email } = req.body;
 
     // if (!message || !name || !email) throw new Error("invalid Inputs");
 
     // const user = new User({ message, name, email });
 
-    res.status(201).send({ message, name, email }, req.body);
+    res.status(201).send(req.body);
   } catch (err) {
     res.status(400).send({ type: "error", message: err.message });
   }
