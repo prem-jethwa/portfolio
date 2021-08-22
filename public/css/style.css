@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Epilogue:wght@300&family=Marcellus+SC&display=swap");
+* {
+  margin: 0;
+}
+body {
+  background-color: rgba(45, 105, 90, 0.377);
+  color: rgb(65, 65, 65);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+:root {
+  --pri-color: #00d897a8;
+  --pri-bg: #29a6cc91;
+
+  /* font */
+  --pri-font: "Epilogue", sans-serif;
+  --sec-font: "Marcellus SC", serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+}
+
+.btn {
+  padding: 0.5em 0.7em;
+  background-color: var(--pri-color);
+  /* border: 2px dotted; */
+  font-size: 1.5em;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 1px 1px 5px rgba(110, 110, 110, 0.541);
+
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+.btn:hover {
+  background-color: var(--pri-bg);
+}
+
+.header {
+  background-color: var(--pri-bg);
+  margin: 0;
+}
+
+.nav {
+  padding: 1rem;
+}
+
+.logo-svg {
+  width: 40px;
+  height: 40px;
+}
+
+.task-header {
+  font-size: 1.75rem;
+  text-shadow: 1px 1px 5px rgba(110, 110, 110, 0.541);
+  font-family: var(--sec-font);
+  margin: auto 0;
+}
+
+/* CURRENT STYLING */
+
+form {
+  display: flex;
+  width: 100vw;
+  height: 70vh;
+  align-items: center;
+  flex-direction: column;
+}
+.pass {
+  margin: 1em auto;
+  padding: 0.5em;
+  font-size: 2rem;
+}
+
+.sub {
+  padding: 1em;
+  font-size: 1.5rem;
+}
+
+/* messages */
+span {
+  font-size: 18px;
+  color: rgb(76, 0, 255);
+}
+.msgs {
+  max-width: 900px;
+  margin: 1.2em auto;
+  width: 100%;
+  font-size: 1.4rem;
+}
+.inner-msg_con {
+  margin: 0.5em auto;
+  padding: 0.5em;
+  background-color: rgb(2, 194, 130);
+}
+
+.msg {
+  font-size: 2rem;
+  color: rgb(228, 228, 228);
+  background-color: cadetblue;
+  margin: 0.5em 0.1em;
+  padding: 0.2em;
+  border-radius: 5px;
+}
+
+.col1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.del-btn {
+  background-color: rgba(255, 127, 80, 0.76);
+}
+@media (max-width: 550px) {
+  .col1 {
+    flex-direction: column;
+  }
+}

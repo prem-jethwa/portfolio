@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="../../logo.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=
+    , initial-scale=1.0"
+    />
+    <link rel="apple-touch-icon" href="../../logo.svg" />
+    <title>Admin View</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+  <body>
+    {{>header}}
+    <div class="msgs">
+      {{#each megs}}
+      <div class="inner-msg_con">
+         <div class="col1">
+           <p class="name"><span>Name : </span>{{this.name}}</p>
+           <p class="email"> <span>Email : </span>{{this.email}}</p>
+         </div>
+          <p class="msg">{{this.message}}</p>
+          <a href="/admin/msg/{{this._id}}"><button class="del-btn" >DELETE</button></a>
+      </div>
+      {{/each}}
+    </div>
+
+  </body>
+</html>

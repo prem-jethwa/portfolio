@@ -1,30 +1,65 @@
 require("./db/mongoose");
 const express = require("express");
 const cors = require("cors");
-const User = require("./model/user");
+const {
+  postMessage,
+  getForm,
+  validAdmin,
+  updateAdminPass,
+  getUpdateAdminForm,
+  deleteSingleMsg,
+  getMessages,
+} = require("./controller/routers");
+
 const app = express();
+const hbs = require("hbs");
+const path = require("path");
 
 const port = process.env.PORT;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://premjethwa.com",
+  })
+);
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-app.get("/", (req, res) => {
-  res.send("test 2");
-});
+const publicDirPath = path.join(__dirname, "./public");
+const viewDirPath = path.join(__dirname, "./template");
+const partialsDirPath = path.join(__dirname, "./partials");
 
-app.post("/", (req, res) => {
-  try {
-    const { message, name, email } = req.body;
+hbs.registerPartials(partialsDirPath);
 
-    if (!message || !name || !email) throw new Error("invalid Inputs");
+app.set("view engine", "hbs");
+app.set("views", viewDirPath);
 
-    const user = new User({ message, name, email });
+app.use(express.static(publicDirPath));
 
-    res.status(201).send(user);
-  } catch (err) {
-    res.status(400).send({ type: "error", message: err.message });
-  }
-});
+// prevention
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 
-app.listen(port, console.log);
+app.use(mongoSanitize());
+app.use(helmet());
+app.use(hpp());
+app.use(xss());
+
+//routers
+app.post("/msg", postMessage);
+
+app.get("/admin", getForm);
+
+app.get("/admin/update/:token", getUpdateAdminForm);
+app.post("/admin/update/:token", updateAdminPass);
+app.get("/admin/msg/:id", deleteSingleMsg);
+app.post("/admin/:token", validAdmin);
+app.get("/admin/:token", getMessages);
+
+app.listen(port, () => console.log(port));
