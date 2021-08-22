@@ -41,12 +41,12 @@ app.set("views", viewDirPath);
 app.use(express.static(publicDirPath));
 
 // prevention
-const mongoSanitize = require("express-mongo-sanitize");
+// const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 app.use(helmet());
 app.use(hpp());
 app.use(xss());
