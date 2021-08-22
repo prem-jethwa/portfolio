@@ -62,4 +62,7 @@ app.get("/admin/msg/:id", deleteSingleMsg);
 app.post("/admin/:token", validAdmin);
 app.get("/admin/:token", getMessages);
 
+app.get("*", (req, res) => {
+  res.send("<h2> PAGE NOT FOUND (404) </h2>");
+});
 app.listen(port, () => console.log(port));

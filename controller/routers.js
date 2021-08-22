@@ -3,6 +3,10 @@ const Admin = require("../model/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+//err message
+
+const errMsg = "<h2> PAGE NOT FOUND (404) </h2>";
+
 //default admin
 const createAdmin = async () => {
   await Admin.deleteMany({});
@@ -35,11 +39,10 @@ const postMessage = async (req, res) => {
 };
 
 const getForm = async (req, res) => {
-  if (req.query.key !== process.env.QUERY_KEY)
-    return res.send("Not Route avalable (404)");
+  if (req.query.key !== process.env.QUERY_KEY) return res.send(errMsg);
 
   const admin = await validateAdmin();
-  if (!admin) return res.send("Not Route avalable (404)");
+  if (!admin) return res.send(errMsg);
 
   const token = await jwt.sign({ _id: admin._id }, process.env.JWT_KEY);
   admin.token = await token;
@@ -52,10 +55,10 @@ const getForm = async (req, res) => {
 
 const validAdmin = async (req, res) => {
   const admin = await validateAdmin(req);
-  if (!admin) return res.send("Not Route avalable (404)");
+  if (!admin) return res.send(errMsg);
 
   const isMatch = await bcrypt.compare(req.body.password, admin.password);
-  if (!isMatch) return res.send("Route does not exist");
+  if (!isMatch) return res.send(errMsg);
 
   const megs = await User.find({});
 
@@ -67,7 +70,7 @@ const validAdmin = async (req, res) => {
 
 const getMessages = async (req, res) => {
   const admin = await validateAdmin(req);
-  if (!admin) return res.send("Not Route avalable (404)");
+  if (!admin) return res.send(errMsg);
 
   const megs = await User.find({});
 
@@ -79,9 +82,9 @@ const getMessages = async (req, res) => {
 
 const updateAdminPass = async (req, res) => {
   const admin = await validateAdmin(req);
-  if (!admin) return res.send("Not Route avalable (404)");
+  if (!admin) return res.send(errMsg);
 
-  if (req.body.bod !== process.env.BOD) return res.send("Route does not exist");
+  if (req.body.bod !== process.env.BOD) return res.send(errMsg);
 
   admin.password = req.body.password;
   await admin.save();
@@ -91,7 +94,7 @@ const updateAdminPass = async (req, res) => {
 
 const getUpdateAdminForm = async (req, res) => {
   const admin = await validateAdmin(req);
-  if (!admin) return res.send("Not Route avalable (404)");
+  if (!admin) return res.send(errMsg);
 
   res.render("update", {
     token: admin.token,
@@ -101,7 +104,7 @@ const getUpdateAdminForm = async (req, res) => {
 const deleteSingleMsg = async (req, res) => {
   try {
     const admin = await validateAdmin();
-    if (!admin) return res.send("Not Route avalable (404)");
+    if (!admin) return res.send(errMsg);
 
     await User.findByIdAndDelete({ _id: req.params.id });
 
