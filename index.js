@@ -17,11 +17,6 @@ const path = require("path");
 
 const port = process.env.PORT;
 
-app.use(
-  cors({
-    origin: "https://premjethwa.com",
-  })
-);
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -51,8 +46,15 @@ app.use(helmet());
 app.use(hpp());
 app.use(xss());
 
+app.use(cors());
 //routers
-app.post("/msg", postMessage);
+app.post(
+  "/msg",
+  cors({
+    origin: "https://premjethwa.com",
+  }),
+  postMessage
+);
 
 app.get("/admin", getForm);
 
