@@ -3,14 +3,20 @@ const Admin = require("../model/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+const connectDB = require('../db/mongoose')
 //err message
 
 const errMsg = "<h2> PAGE NOT FOUND (404) </h2>";
 
 //default admin
 const createAdmin = async () => {
-  await Admin.deleteMany({});
-  await new Admin({ password: process.env.ADMIN_PASS, token: "" }).save();
+  try{
+    await connectDB();
+    await Admin.deleteMany({});
+    await new Admin({ password: process.env.ADMIN_PASS, token: "" }).save();
+    }catch(err){
+    console.log(err);
+  }
 };
 createAdmin();
 

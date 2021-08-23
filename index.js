@@ -1,4 +1,5 @@
 require("./db/mongoose");
+
 const express = require("express");
 const cors = require("cors");
 const {
@@ -36,17 +37,16 @@ app.set("views", viewDirPath);
 app.use(express.static(publicDirPath));
 
 // prevention
-// const mongoSanitize = require("express-mongo-sanitize");
-// const helmet = require("helmet");
-// const xss = require("xss-clean");
-// const hpp = require("hpp");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 
-// // app.use(mongoSanitize());
-// app.use(helmet());
-// app.use(hpp());
-// app.use(xss());
+ app.use(mongoSanitize());
+app.use(helmet());
+app.use(hpp());
+app.use(xss());
 
-app.use(cors());
 //routers
 app.post(
   "/msg",
@@ -56,6 +56,7 @@ app.post(
   postMessage
 );
 
+app.use(cors());
 app.get("/admin", getForm);
 
 app.get("/admin/update/:token", getUpdateAdminForm);
@@ -65,6 +66,6 @@ app.post("/admin/:token", validAdmin);
 app.get("/admin/:token", getMessages);
 
 app.get("*", (req, res) => {
-  res.send("<h2> PAGE NOT FOUND (404) </h2>");
+  res.send("<h2> PAGE NOT FOUND (404).</h2>");
 });
 app.listen(port, () => console.log(port));
